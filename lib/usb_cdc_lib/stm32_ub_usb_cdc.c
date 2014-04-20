@@ -37,7 +37,7 @@
 //--------------------------------------------------------------
 // Globale Variabeln
 //--------------------------------------------------------------
-USB_OTG_CORE_HANDLE  USB_OTG_dev;
+USB_OTG_CORE_HANDLE USB_OTG_dev;
 USB_CDC_STATUS_t USB_CDC_STATUS;
 
 
@@ -49,8 +49,8 @@ USB_CDC_STATUS_t USB_CDC_STATUS;
 //--------------------------------------------------------------
 void UB_USB_CDC_Init(void)
 {
-  USB_CDC_STATUS=USB_CDC_DETACHED;
-  USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_CDC_cb, &USR_cb);
+    USB_CDC_STATUS = USB_CDC_DETACHED;
+    USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_CDC_cb, &USR_cb);
 }
 
 //--------------------------------------------------------------
@@ -62,7 +62,7 @@ void UB_USB_CDC_Init(void)
 //--------------------------------------------------------------
 USB_CDC_STATUS_t UB_USB_CDC_GetStatus(void)
 {
-  return(USB_CDC_STATUS);
+    return (USB_CDC_STATUS);
 }
 
 
@@ -76,18 +76,17 @@ USB_CDC_STATUS_t UB_USB_CDC_GetStatus(void)
 ErrorStatus UB_USB_CDC_SendString(char *ptr)
 {
 
-  if(USB_CDC_STATUS!=USB_CDC_CONNECTED) {
-  // senden nur, wenn Verbindung hergestellt ist
-    return(ERROR);
-  }
+    if (USB_CDC_STATUS != USB_CDC_CONNECTED) {
+        // senden nur, wenn Verbindung hergestellt ist
+        return (ERROR);
+    }
+    // kompletten String senden
+    while (*ptr != 0) {
+        UB_VCP_DataTx(*ptr);
+        ptr++;
+    }
 
-  // kompletten String senden
-  while (*ptr != 0) {
-    UB_VCP_DataTx(*ptr);
-    ptr++;
-  }
-
-  return(SUCCESS);
+    return (SUCCESS);
 }
 
 //--------------------------------------------------------------
@@ -100,16 +99,15 @@ ErrorStatus UB_USB_CDC_SendString(char *ptr)
 ErrorStatus UB_USB_CDC_SendChar(char c)
 {
 
-  if(USB_CDC_STATUS!=USB_CDC_CONNECTED) {
-  // senden nur, wenn Verbindung hergestellt ist
-    return(ERROR);
-  }
+    if (USB_CDC_STATUS != USB_CDC_CONNECTED) {
+        // senden nur, wenn Verbindung hergestellt ist
+        return (ERROR);
+    }
+    // char senden
+    UB_VCP_DataTx(c);
 
-  // char senden
-	UB_VCP_DataTx(c);
 
-
-  return(SUCCESS);
+    return (SUCCESS);
 }
 
 
@@ -124,20 +122,20 @@ ErrorStatus UB_USB_CDC_SendChar(char c)
 //--------------------------------------------------------------
 USB_CDC_RXSTATUS_t UB_USB_CDC_ReceiveString(char *ptr, int length)
 {
-  uint16_t check;
+    uint16_t check;
 
-  if(USB_CDC_STATUS!=USB_CDC_CONNECTED) {
-    // empfangen nur, wenn Verbindung hergestellt ist
-    return(RX_USB_ERR);
-  }
+    if (USB_CDC_STATUS != USB_CDC_CONNECTED) {
+        // empfangen nur, wenn Verbindung hergestellt ist
+        return (RX_USB_ERR);
+    }
 
-  check=UB_VCP_StringRx(ptr, length);
-  if(check==0) {
-    ptr[0]=0x00;
-    return(RX_EMPTY);
-  }
+    check = UB_VCP_StringRx(ptr, length);
+    if (check == 0) {
+        ptr[0] = 0x00;
+        return (RX_EMPTY);
+    }
 
-  return(RX_READY);
+    return (RX_READY);
 }
 
 //--------------------------------------------------------------
@@ -149,20 +147,10 @@ USB_CDC_RXSTATUS_t UB_USB_CDC_ReceiveString(char *ptr, int length)
 //  -> wenn nichts empfangen = RX_EMPTY
 //  -> wenn String empfangen = RX_READY -> String steht in *ptr
 //--------------------------------------------------------------
-USB_CDC_RXSTATUS_t UB_USB_CDC_GetChar(char *ptr, int length)
+USB_CDC_RXSTATUS_t UB_USB_CDC_GetChar(char c)
 {
-  uint16_t check;
 
-  if(USB_CDC_STATUS!=USB_CDC_CONNECTED) {
-    // empfangen nur, wenn Verbindung hergestellt ist
-    return(RX_USB_ERR);
-  }
+    return (RX_EMPTY);
 
-  check=UB_VCP_StringRx(ptr, length);
-  if(check==0) {
-    ptr[0]=0x00;
-    return(RX_EMPTY);
-  }
-
-  return(RX_READY);
+    return (RX_READY);
 }

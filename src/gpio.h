@@ -8,4 +8,4 @@
 
 void init_GPIO(void);
 
-#endif /* GOIO_H_ */
+#endif                          /* GOIO_H_ */

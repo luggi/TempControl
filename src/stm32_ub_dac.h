@@ -17,10 +17,10 @@
 
 
 typedef enum {
-  SINGLE_DAC1 = 0, // nur DAC1 an PA4 benutzen
-  SINGLE_DAC2,     // nur DAC2 an PA5 benutzen
-  DUAL_DAC         // DAC1 (PA4) und DAC2 (PA5) benutzen
-}DAC_MODE_t;
+    SINGLE_DAC1 = 0,            // nur DAC1 an PA4 benutzen
+    SINGLE_DAC2,                // nur DAC2 an PA5 benutzen
+    DUAL_DAC                    // DAC1 (PA4) und DAC2 (PA5) benutzen
+} DAC_MODE_t;
 
 
 
@@ -35,4 +35,4 @@ void UB_DAC_SetDAC1u2(uint16_t dacwert_1, uint16_t dacwert_2);
 
 
 //--------------------------------------------------------------
-#endif // __STM32F4_UB_DAC_H
+#endif                          // __STM32F4_UB_DAC_H

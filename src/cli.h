@@ -12,4 +12,4 @@ extern uint8_t cliMode;
 
 void cliProcess(void);
 
-#endif /* CLI_H_ */
+#endif                          /* CLI_H_ */

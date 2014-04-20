@@ -42,21 +42,21 @@ void P_DAC2_InitDAC(void);
 //--------------------------------------------------------------
 void UB_DAC_Init(DAC_MODE_t mode)
 {
-  // DAC-Mode speichern
-  akt_dac_mode=mode;
+    // DAC-Mode speichern
+    akt_dac_mode = mode;
 
-  if((mode==SINGLE_DAC1) || (mode==DUAL_DAC)) {
-    P_DAC1_InitIO();
-    P_DAC1_InitDAC();
-    // DAC1 auf 0 setzen
-    UB_DAC_SetDAC1(0);
-  }
-  if((mode==SINGLE_DAC2) || (mode==DUAL_DAC)) {
-    P_DAC2_InitIO();
-    P_DAC2_InitDAC();
-    // DAC2 auf 0 setzen
-    UB_DAC_SetDAC2(0);
-  }
+    if ((mode == SINGLE_DAC1) || (mode == DUAL_DAC)) {
+        P_DAC1_InitIO();
+        P_DAC1_InitDAC();
+        // DAC1 auf 0 setzen
+        UB_DAC_SetDAC1(0);
+    }
+    if ((mode == SINGLE_DAC2) || (mode == DUAL_DAC)) {
+        P_DAC2_InitIO();
+        P_DAC2_InitDAC();
+        // DAC2 auf 0 setzen
+        UB_DAC_SetDAC2(0);
+    }
 }
 
 
@@ -66,13 +66,15 @@ void UB_DAC_Init(DAC_MODE_t mode)
 //--------------------------------------------------------------
 void UB_DAC_SetDAC1(uint16_t wert)
 {
-  if(akt_dac_mode==SINGLE_DAC2) return; // wenn nicht erlaubt
+    if (akt_dac_mode == SINGLE_DAC2)
+        return;                 // wenn nicht erlaubt
 
-  // Maxwert = 12bit
-  if(wert>4095) wert=4095;
+    // Maxwert = 12bit
+    if (wert > 4095)
+        wert = 4095;
 
-  // DAC1 Wert einstellen (12Bit, rechtsbündig)
-  DAC_SetChannel1Data(DAC_Align_12b_R, wert);
+    // DAC1 Wert einstellen (12Bit, rechtsbündig)
+    DAC_SetChannel1Data(DAC_Align_12b_R, wert);
 }
 
 
@@ -82,13 +84,15 @@ void UB_DAC_SetDAC1(uint16_t wert)
 //--------------------------------------------------------------
 void UB_DAC_SetDAC2(uint16_t wert)
 {
-  if(akt_dac_mode==SINGLE_DAC1) return; // wenn nicht erlaubt
+    if (akt_dac_mode == SINGLE_DAC1)
+        return;                 // wenn nicht erlaubt
 
-  // Maxwert = 12bit
-  if(wert>4095) wert=4095;
+    // Maxwert = 12bit
+    if (wert > 4095)
+        wert = 4095;
 
-  // DAC2 Wert einstellen (12Bit, rechtsbündig)
-  DAC_SetChannel2Data(DAC_Align_12b_R, wert);
+    // DAC2 Wert einstellen (12Bit, rechtsbündig)
+    DAC_SetChannel2Data(DAC_Align_12b_R, wert);
 }
 
 
@@ -98,14 +102,17 @@ void UB_DAC_SetDAC2(uint16_t wert)
 //--------------------------------------------------------------
 void UB_DAC_SetDAC1u2(uint16_t dacwert_1, uint16_t dacwert_2)
 {
-  if(akt_dac_mode!=DUAL_DAC) return; // wenn nicht erlaubt
+    if (akt_dac_mode != DUAL_DAC)
+        return;                 // wenn nicht erlaubt
 
-  // Maxwert = 12bit
-  if(dacwert_1>4095) dacwert_1=4095;
-  if(dacwert_2>4095) dacwert_2=4095;
+    // Maxwert = 12bit
+    if (dacwert_1 > 4095)
+        dacwert_1 = 4095;
+    if (dacwert_2 > 4095)
+        dacwert_2 = 4095;
 
-  // DAC1 und DAC2 Wert einstellen (12Bit, rechtsbündig)
-  DAC_SetDualChannelData(DAC_Align_12b_R,dacwert_2,dacwert_1);
+    // DAC1 und DAC2 Wert einstellen (12Bit, rechtsbündig)
+    DAC_SetDualChannelData(DAC_Align_12b_R, dacwert_2, dacwert_1);
 }
 
 
@@ -115,16 +122,16 @@ void UB_DAC_SetDAC1u2(uint16_t dacwert_1, uint16_t dacwert_2)
 //--------------------------------------------------------------
 void P_DAC1_InitIO(void)
 {
-  GPIO_InitTypeDef  GPIO_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
 
-  // Clock Enable
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+    // Clock Enable
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 
-  // Config des DAC-Pins als Analog-Ausgang
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+    // Config des DAC-Pins als Analog-Ausgang
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
 
@@ -134,16 +141,16 @@ void P_DAC1_InitIO(void)
 //--------------------------------------------------------------
 void P_DAC2_InitIO(void)
 {
-  GPIO_InitTypeDef  GPIO_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
 
-  // Clock Enable
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+    // Clock Enable
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 
-  // Config des DAC-Pins als Analog-Ausgang
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+    // Config des DAC-Pins als Analog-Ausgang
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
 
@@ -153,19 +160,19 @@ void P_DAC2_InitIO(void)
 //--------------------------------------------------------------
 void P_DAC1_InitDAC(void)
 {
-  DAC_InitTypeDef  DAC_InitStructure;
+    DAC_InitTypeDef DAC_InitStructure;
 
-  // Clock Enable
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
+    // Clock Enable
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
 
-  // DAC-Config
-  DAC_InitStructure.DAC_Trigger=DAC_Trigger_None;
-  DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;
-  DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
-  DAC_Init(DAC_Channel_1, &DAC_InitStructure);
+    // DAC-Config
+    DAC_InitStructure.DAC_Trigger = DAC_Trigger_None;
+    DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;
+    DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
+    DAC_Init(DAC_Channel_1, &DAC_InitStructure);
 
-  // DAC enable
-  DAC_Cmd(DAC_Channel_1, ENABLE);
+    // DAC enable
+    DAC_Cmd(DAC_Channel_1, ENABLE);
 }
 
 
@@ -175,17 +182,17 @@ void P_DAC1_InitDAC(void)
 //--------------------------------------------------------------
 void P_DAC2_InitDAC(void)
 {
-  DAC_InitTypeDef  DAC_InitStructure;
+    DAC_InitTypeDef DAC_InitStructure;
 
-  // Clock Enable
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
+    // Clock Enable
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
 
-  // DAC-Config
-  DAC_InitStructure.DAC_Trigger=DAC_Trigger_None;
-  DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;
-  DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
-  DAC_Init(DAC_Channel_2, &DAC_InitStructure);
+    // DAC-Config
+    DAC_InitStructure.DAC_Trigger = DAC_Trigger_None;
+    DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;
+    DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
+    DAC_Init(DAC_Channel_2, &DAC_InitStructure);
 
-  // DAC enable
-  DAC_Cmd(DAC_Channel_2, ENABLE);
+    // DAC enable
+    DAC_Cmd(DAC_Channel_2, ENABLE);
 }

@@ -18,21 +18,21 @@
 // Status der USB-Verbindung
 //--------------------------------------------------------------
 typedef enum {
-  USB_CDC_NO_INIT =0, // USB-Schnittstelle noch nicht initialisiert
-  USB_CDC_DETACHED,   // USB-Verbindung getrennt
-  USB_CDC_CONNECTED   // USB-Verbindung hergestellt
-}USB_CDC_STATUS_t;
+    USB_CDC_NO_INIT = 0,        // USB-Schnittstelle noch nicht initialisiert
+    USB_CDC_DETACHED,           // USB-Verbindung getrennt
+    USB_CDC_CONNECTED           // USB-Verbindung hergestellt
+} USB_CDC_STATUS_t;
 
 //--------------------------------------------------------------
 // Endekennung beim Senden
 //--------------------------------------------------------------
 typedef enum {
-  NONE = 0,  // keine Endekennung
-  LFCR,      // LineFeed + CarriageReturn (0x0A,0x0D)
-  CRLF,      // CarriageReturn + LineFeed (0x0D,0x0A)
-  LF,        // nur LineFeed (0x0A)
-  CR         // nur CarriageReturn (0x0D)
-}USB_CDC_LASTBYTE_t;
+    NONE = 0,                   // keine Endekennung
+    LFCR,                       // LineFeed + CarriageReturn (0x0A,0x0D)
+    CRLF,                       // CarriageReturn + LineFeed (0x0D,0x0A)
+    LF,                         // nur LineFeed (0x0A)
+    CR                          // nur CarriageReturn (0x0D)
+} USB_CDC_LASTBYTE_t;
 
 extern USB_CDC_STATUS_t USB_CDC_STATUS;
 
@@ -40,10 +40,10 @@ extern USB_CDC_STATUS_t USB_CDC_STATUS;
 // Status beim Empfangen
 //--------------------------------------------------------------
 typedef enum {
-  RX_USB_ERR =0, // keine USB Verbindung
-  RX_EMPTY,      // nichts empfangen
-  RX_READY       // es steht was im Empfangspuffer
-}USB_CDC_RXSTATUS_t;
+    RX_USB_ERR = 0,             // keine USB Verbindung
+    RX_EMPTY,                   // nichts empfangen
+    RX_READY                    // es steht was im Empfangspuffer
+} USB_CDC_RXSTATUS_t;
 
 
 //--------------------------------------------------------------
@@ -56,4 +56,4 @@ ErrorStatus UB_USB_CDC_SendChar(char c);
 USB_CDC_RXSTATUS_t UB_USB_CDC_ReceiveString(char *ptr, int length);
 
 //--------------------------------------------------------------
-#endif // __STM32F4_UB_USB_CDC_H
+#endif                          // __STM32F4_UB_USB_CDC_H

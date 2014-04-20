@@ -12,10 +12,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
-typedef void (* outputFunctionPtr)(float pidResult);
+typedef void (*outputFunctionPtr) (float pidResult);
 
-typedef struct pid_t
-{
+typedef struct pid_t {
     float P;
     float I;
     float D;
@@ -23,11 +22,11 @@ typedef struct pid_t
     float old_pv;
     float windup;
     outputFunctionPtr write;
-} pid_t; 
+} pid_t;
 
 // Function declaration
-void pid_init(pid_t *pid, float P, float I, float D, float windup, outputFunctionPtr outputPtr);
-void pid_calc(pid_t *pid, float sp, float pv, float deltaT);
+void pid_init(pid_t * pid, float P, float I, float D, float windup, outputFunctionPtr outputPtr);
+void pid_calc(pid_t * pid, float sp, float pv, float deltaT);
 static float constrain(float min, float max, float value);
 
 

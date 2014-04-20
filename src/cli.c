@@ -31,20 +31,21 @@ static char *ftoa(float x, char *floatString);
 typedef struct {
     const char *name;
     const char *param;
-    void (*func)(char *cmdline);
+    void (*func) (char *cmdline);
 } clicmd_t;
 
 // should be sorted a..z for bsearch()
 const clicmd_t cmdTable[] = {
-    { "defaults", "reset to defaults and reboot", cliDefaults },
-    { "dump", "print configurable settings in a pastable form", cliDump },
-    { "exit", "", cliExit },
-    { "help", "", cliHelp },
-    { "save", "save and reboot", cliSave },
-    { "set", "name=value or blank or * for list", cliSet },
-    { "status", "show system status", cliStatus },
-    { "version", "", cliVersion },
+    {"defaults", "reset to defaults and reboot", cliDefaults},
+    {"dump", "print configurable settings in a pastable form", cliDump},
+    {"exit", "", cliExit},
+    {"help", "", cliHelp},
+    {"save", "save and reboot", cliSave},
+    {"set", "name=value or blank or * for list", cliSet},
+    {"status", "show system status", cliStatus},
+    {"version", "", cliVersion},
 };
+
 #define CMD_COUNT (sizeof(cmdTable) / sizeof(clicmd_t))
 
 typedef enum {
@@ -58,24 +59,24 @@ typedef enum {
 
 typedef struct {
     const char *name;
-    const uint8_t type; // vartype_e
+    const uint8_t type;         // vartype_e
     void *ptr;
     const int32_t min;
     const int32_t max;
 } clivalue_t;
 
 const clivalue_t valueTable[] = {
-    { "cycleTime", VAR_UINT32, &config.cycletime, 10, 5000},
-    { "manualMode", VAR_UINT8, &config.manualMode, 0, 1},
-    { "voltage", VAR_FLOAT, &dac.voltsOutput, 0, 10 },
-    { "current", VAR_FLOAT, &dac.ampereOutput, 0, 10 },
-    { "maxAmps", VAR_FLOAT, &dac.maxAmps, 0, 10},
-    { "ampscale", VAR_FLOAT, &dac.scale1ToA, 0, 1000},    
-    { "setpoint1", VAR_FLOAT, &setpoint[0], 0, 1000},
-    { "setpoint2", VAR_FLOAT, &setpoint[1], 0, 1000},
-    { "pid1Pterm", VAR_FLOAT, &pid1.P, 0, 100},
-    { "pid1Iterm", VAR_FLOAT, &pid1.I, 0, 10},
-    { "pid1Dterm", VAR_FLOAT, &pid1.D, 0, 10},
+    {"cycleTime", VAR_UINT32, &config.cycletime, 10, 5000},
+    {"manualMode", VAR_UINT8, &config.manualMode, 0, 1},
+    {"voltage", VAR_FLOAT, &dac.voltsOutput, 0, 10},
+    {"current", VAR_FLOAT, &dac.ampereOutput, 0, 10},
+    {"maxAmps", VAR_FLOAT, &dac.maxAmps, 0, 10},
+    {"ampscale", VAR_FLOAT, &dac.scale1ToA, 0, 1000},
+    {"setpoint1", VAR_FLOAT, &setpoint[0], 0, 1000},
+    {"setpoint2", VAR_FLOAT, &setpoint[1], 0, 1000},
+    {"pid1Pterm", VAR_FLOAT, &pid1.P, 0, 100},
+    {"pid1Iterm", VAR_FLOAT, &pid1.I, 0, 10},
+    {"pid1Dterm", VAR_FLOAT, &pid1.D, 0, 10},
 };
 
 #define VALUE_COUNT (sizeof(valueTable) / sizeof(clivalue_t))
@@ -86,8 +87,8 @@ typedef union {
     float float_value;
 } int_float_value_t;
 
-static void cliSetVar(const clivalue_t *var, const int_float_value_t value);
-static void cliPrintVar(const clivalue_t *var, uint32_t full);
+static void cliSetVar(const clivalue_t * var, const int_float_value_t value);
+static void cliPrintVar(const clivalue_t * var, uint32_t full);
 static void cliPrint(const char *str);
 static void cliWrite(uint8_t ch);
 
@@ -121,7 +122,7 @@ char *itoa(int i, char *a, int r)
         r = 10;
     if (i < 0) {
         *a = '-';
-        *i2a(-(unsigned)i, a + 1, r) = 0;
+        *i2a(-(unsigned) i, a + 1, r) = 0;
     } else
         *i2a(i, a, r) = 0;
     return a;
@@ -150,7 +151,7 @@ static float _atof(const char *p)
     float sign, value, scale;
 
     // Skip leading white space, if any.
-    while (white_space(*p) ) {
+    while (white_space(*p)) {
         p += 1;
     }
 
@@ -163,7 +164,6 @@ static float _atof(const char *p)
     } else if (*p == '+') {
         p += 1;
     }
-
     // Get digits before decimal point or exponent, if any.
     value = 0.0f;
     while (valid_digit(*p)) {
@@ -182,7 +182,6 @@ static float _atof(const char *p)
             p += 1;
         }
     }
-
     // Handle exponent, if any.
     scale = 1.0f;
     if ((*p == 'e') || (*p == 'E')) {
@@ -198,22 +197,26 @@ static float _atof(const char *p)
         } else if (*p == '+') {
             p += 1;
         }
-
         // Get digits of exponent, if any.
         expon = 0;
         while (valid_digit(*p)) {
             expon = expon * 10 + (*p - '0');
             p += 1;
         }
-        if (expon > 308) 
+        if (expon > 308)
             expon = 308;
 
         // Calculate scaling factor.
         // while (expon >= 50) { scale *= 1E50f; expon -= 50; }
-        while (expon >=  8) { scale *= 1E8f;  expon -=  8; }
-        while (expon >   0) { scale *= 10.0f; expon -=  1; }
+        while (expon >= 8) {
+            scale *= 1E8f;
+            expon -= 8;
+        }
+        while (expon > 0) {
+            scale *= 10.0f;
+            expon -= 1;
+        }
     }
-
     // Return signed and scaled floating point result.
     return sign * (frac ? (value / scale) : (value * scale));
 }
@@ -322,79 +325,79 @@ static void cliSave(char *cmdline)
 
 static void cliPrint(const char *str)
 {
-    UB_USB_CDC_SendString((char *)str);
+    UB_USB_CDC_SendString((char *) str);
 }
 
 static void cliWrite(uint8_t ch)
 {
-    UB_USB_CDC_SendChar((char)ch);
+    UB_USB_CDC_SendChar((char) ch);
 }
 
-static void cliPrintVar(const clivalue_t *var, uint32_t full)
+static void cliPrintVar(const clivalue_t * var, uint32_t full)
 {
     int32_t value = 0;
     char buf[20];
 
     switch (var->type) {
-        case VAR_UINT8:
-            value = *(uint8_t *)var->ptr;
-            break;
+    case VAR_UINT8:
+        value = *(uint8_t *) var->ptr;
+        break;
 
-        case VAR_INT8:
-            value = *(int8_t *)var->ptr;
-            break;
+    case VAR_INT8:
+        value = *(int8_t *) var->ptr;
+        break;
 
-        case VAR_UINT16:
-            value = *(uint16_t *)var->ptr;
-            break;
+    case VAR_UINT16:
+        value = *(uint16_t *) var->ptr;
+        break;
 
-        case VAR_INT16:
-            value = *(int16_t *)var->ptr;
-            break;
+    case VAR_INT16:
+        value = *(int16_t *) var->ptr;
+        break;
 
-        case VAR_UINT32:
-            value = *(uint32_t *)var->ptr;
-            break;
+    case VAR_UINT32:
+        value = *(uint32_t *) var->ptr;
+        break;
 
-        case VAR_FLOAT:
-            printf("%s", ftoa(*(float *)var->ptr, buf));
-            if (full) {
-                printf(" %s", ftoa((float)var->min, buf));
-                printf(" %s", ftoa((float)var->max, buf));
-            }
-            return; // return from case for float only
+    case VAR_FLOAT:
+        printf("%s", ftoa(*(float *) var->ptr, buf));
+        if (full) {
+            printf(" %s", ftoa((float) var->min, buf));
+            printf(" %s", ftoa((float) var->max, buf));
+        }
+        return;                 // return from case for float only
     }
     printf("%d", value);
     if (full)
         printf(" %d %d", var->min, var->max);
 }
 
-static void cliSetVar(const clivalue_t *var, const int_float_value_t value)
+static void cliSetVar(const clivalue_t * var, const int_float_value_t value)
 {
     switch (var->type) {
-        case VAR_UINT8:
-        case VAR_INT8:
-            *(char *)var->ptr = (char)value.int_value;
-            break;
+    case VAR_UINT8:
+    case VAR_INT8:
+        *(char *) var->ptr = (char) value.int_value;
+        break;
 
-        case VAR_UINT16:
-        case VAR_INT16:
-            *(short *)var->ptr = (short)value.int_value;
-            break;
+    case VAR_UINT16:
+    case VAR_INT16:
+        *(short *) var->ptr = (short) value.int_value;
+        break;
 
-        case VAR_UINT32:
-            *(int *)var->ptr = (int)value.int_value;
-            break;
+    case VAR_UINT32:
+        *(int *) var->ptr = (int) value.int_value;
+        break;
 
-        case VAR_FLOAT:
-            *(float *)var->ptr = (float)value.float_value;
-            break;
+    case VAR_FLOAT:
+        *(float *) var->ptr = (float) value.float_value;
+        break;
     }
 }
 
 static void cliSet(char *cmdline)
 {
-    
+
     int i;
     int len;
     const clivalue_t *val;
@@ -404,14 +407,14 @@ static void cliSet(char *cmdline)
 
     len = strlen(cmdline);
 
-    
+
     if (len == 0 || (len == 1 && cmdline[0] == '*')) {
         cliPrint("Current settings: \r\n");
         for (i = 0; i < VALUE_COUNT; i++) {
-              val = &valueTable[i];
-              printf("%s = ", valueTable[i].name);
-              cliPrintVar(val, len); // when len is 1 (when * is passed as argument), it will print min/max values as well, for gui
-              cliPrint("\r\n");
+            val = &valueTable[i];
+            printf("%s = ", valueTable[i].name);
+            cliPrintVar(val, len);      // when len is 1 (when * is passed as argument), it will print min/max values as well, for gui
+            cliPrint("\r\n");
         }
     } else if ((eqptr = strstr(cmdline, "=")) != NULL) {
         // has equal, set var
@@ -422,7 +425,7 @@ static void cliSet(char *cmdline)
         for (i = 0; i < VALUE_COUNT; i++) {
             val = &valueTable[i];
             if (strncasecmp(cmdline, valueTable[i].name, strlen(valueTable[i].name)) == 0) {
-                if (valuef >= valueTable[i].min && valuef <= valueTable[i].max) { // here we compare the float value since... it should work, RIGHT?
+                if (valuef >= valueTable[i].min && valuef <= valueTable[i].max) {       // here we compare the float value since... it should work, RIGHT?
                     int_float_value_t tmp;
                     if (valueTable[i].type == VAR_FLOAT)
                         tmp.float_value = valuef;
@@ -454,10 +457,10 @@ static void cliSet(char *cmdline)
 static void cliStatus(char *cmdline)
 {
     char buf[10];
-    
+
     printf("System Uptime: %d seconds\r\n", millis() / 1000);
-    printf("Temperature1: %s degC \r\n", ftoa(temperature[SENSOR1],buf));
-    printf("Temperature2: %s degC \r\n", ftoa(temperature[SENSOR2],buf));
+    printf("Temperature1: %s degC \r\n", ftoa(temperature[SENSOR1], buf));
+    printf("Temperature2: %s degC \r\n", ftoa(temperature[SENSOR2], buf));
 }
 
 static void cliVersion(char *cmdline)
@@ -470,7 +473,7 @@ void cliProcess(void)
     char buffer[128];
     uint8_t c;
     int i = 0;
-    
+
     if (!cliMode) {
         cliMode = 1;
         cliPrint("\r\nEntering CLI Mode, type 'exit' to return, or 'help'\r\n");
@@ -491,8 +494,8 @@ void cliProcess(void)
                         pstart = cmd;
                     pend = cmd;
                 }
-                if (pstart) {    /* Buffer matches one or more commands */
-                    for (; ; bufferIndex++) {
+                if (pstart) {   /* Buffer matches one or more commands */
+                    for (;; bufferIndex++) {
                         if (pstart->name[bufferIndex] != pend->name[bufferIndex])
                             break;
                         if (!pstart->name[bufferIndex] && bufferIndex < sizeof(cliBuffer) - 2) {
@@ -512,7 +515,7 @@ void cliProcess(void)
                         cliWrite('\t');
                     }
                     cliPrompt();
-                    i = 0;    /* Redraw prompt */
+                    i = 0;      /* Redraw prompt */
                 }
                 for (; i < bufferIndex; i++)
                     cliWrite(cliBuffer[i]);
@@ -528,7 +531,7 @@ void cliProcess(void)
                 clicmd_t *cmd = NULL;
                 clicmd_t target;
                 cliPrint("\r\n");
-                cliBuffer[bufferIndex] = 0; // null terminate
+                cliBuffer[bufferIndex] = 0;     // null terminate
 
                 target.name = cliBuffer;
                 target.param = NULL;

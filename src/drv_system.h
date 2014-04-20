@@ -11,4 +11,4 @@ uint32_t millis(void);
 void systemReset(bool toBootloader);
 
 // current crystal frequency - 8 or 12MHz
-//extern uint32_t hse_value;
+// extern uint32_t hse_value;

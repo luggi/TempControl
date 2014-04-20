@@ -110,12 +110,11 @@
 #define  MIN(a, b)      (((a) < (b)) ? (a) : (b))
 
 
-typedef enum
-{
-  USB_OTG_HS_CORE_ID = 0,
-  USB_OTG_FS_CORE_ID = 1
-}USB_OTG_CORE_ID_TypeDef;
- 
+typedef enum {
+    USB_OTG_HS_CORE_ID = 0,
+    USB_OTG_FS_CORE_ID = 1
+} USB_OTG_CORE_ID_TypeDef;
+
 
 #define USB_OTG_READ_REG32(reg)  (*(__IO uint32_t *)reg)
 #define USB_OTG_WRITE_REG32(reg,value) (*(__IO uint32_t *)reg = value)
@@ -126,14 +125,10 @@ typedef enum
                               ENUMERATION TYPE
 ********************************************************************************/
 enum USB_OTG_SPEED {
-  USB_SPEED_UNKNOWN = 0,
-  USB_SPEED_LOW,
-  USB_SPEED_FULL,
-  USB_SPEED_HIGH
+    USB_SPEED_UNKNOWN = 0,
+    USB_SPEED_LOW,
+    USB_SPEED_FULL,
+    USB_SPEED_HIGH
 };
 
-#endif //__USB_DEFINES__H__
-
-
-
-
+#endif                          //__USB_DEFINES__H__
