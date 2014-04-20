@@ -28,7 +28,7 @@ typedef struct {
 
 
 
-#define APP_TX_BUF_SIZE         128     // Grösse vom RX-Puffer in Bytes (32,64,128,256 usw)
+#define APP_TX_BUF_SIZE         128     // Grösse vom RX-Puffer in Bytes muss 2^N sein
 #define APP_TX_BUF_MASK       (APP_TX_BUF_SIZE-1)
 #define  USB_CDC_RX_END_CHR    0x0D     // Endekennung (Ascii-Wert)
 #define  USB_CDC_FIRST_ASCII   32       // erstes Ascii-Zeichen
@@ -40,5 +40,7 @@ typedef struct {
 /* Exported functions ------------------------------------------------------- */
 void UB_VCP_DataTx(uint8_t wert);
 uint16_t UB_VCP_StringRx(char *ptr, int length);
+char UB_VCP_CharRx(void);
+uint8_t UB_VCP_DataisReady(void);
 
 #endif

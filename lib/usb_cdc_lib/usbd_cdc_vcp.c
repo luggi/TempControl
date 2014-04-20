@@ -222,10 +222,8 @@ uint16_t UB_VCP_StringRx(char *ptr, int length)
 // Ret_wert :
 // c character
 //--------------------------------------------------------------
-char UB_VCP_CharRx(char *ptr, int length)
+char UB_VCP_CharRx(void)
 {
-    uint16_t akt_pos = 0;
-    uint8_t wert;
     uint32_t temptail;
 
     if (APP_tx_ptr_head == APP_tx_ptr_tail) {
@@ -239,7 +237,7 @@ char UB_VCP_CharRx(char *ptr, int length)
     return APP_Tx_Buffer[temptail];
 }
 
-uint8_t UB_VCP_DataisReady()
+uint8_t UB_VCP_DataisReady(void)
 {
     if (APP_tx_ptr_head == APP_tx_ptr_tail) {
         // Puffer ist leer

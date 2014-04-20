@@ -54,6 +54,8 @@ USB_CDC_STATUS_t UB_USB_CDC_GetStatus(void);
 ErrorStatus UB_USB_CDC_SendString(char *ptr);
 ErrorStatus UB_USB_CDC_SendChar(char c);
 USB_CDC_RXSTATUS_t UB_USB_CDC_ReceiveString(char *ptr, int length);
+char UB_USB_CDC_GetChar(void);
+uint8_t UB_USB_CDC_DataIsReady(void);
 
 //--------------------------------------------------------------
 #endif                          // __STM32F4_UB_USB_CDC_H

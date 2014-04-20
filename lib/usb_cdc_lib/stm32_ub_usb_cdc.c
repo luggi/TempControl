@@ -139,18 +139,20 @@ USB_CDC_RXSTATUS_t UB_USB_CDC_ReceiveString(char *ptr, int length)
 }
 
 //--------------------------------------------------------------
-// einen String per USB-OTG-Schnittstelle empfangen
+// einen Char per USB-OTG-Schnittstelle empfangen
 // (der Empfang wird per Interrupt abgehandelt)
 // diese Funktion muss zyklisch gepollt werden
 // Return Wert :
-//  -> wenn USB nicht bereit = RX_USB_ERR
-//  -> wenn nichts empfangen = RX_EMPTY
-//  -> wenn String empfangen = RX_READY -> String steht in *ptr
+// Character
 //--------------------------------------------------------------
-USB_CDC_RXSTATUS_t UB_USB_CDC_GetChar(char c)
+char UB_USB_CDC_GetChar(void)
 {
-
-    return (RX_EMPTY);
-
-    return (RX_READY);
+    return UB_VCP_CharRx();
 }
+
+uint8_t UB_USB_CDC_DataIsReady(void)
+{
+    UB_VCP_DataisReady();
+}
+
+

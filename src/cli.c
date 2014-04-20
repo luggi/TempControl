@@ -470,7 +470,6 @@ static void cliVersion(char *cmdline)
 
 void cliProcess(void)
 {
-    char buffer[128];
     uint8_t c;
     int i = 0;
 
@@ -480,9 +479,8 @@ void cliProcess(void)
         cliPrompt();
     }
 
-    if (UB_USB_CDC_ReceiveString(buffer, 128) == RX_READY) {
-        while (buffer[i] != 0x00) {
-            c = buffer[i];
+    while (UB_USB_CDC_DataIsReady()) {
+            c = UB_USB_CDC_GetChar();
             if (c == '\t' || c == '?') {
                 // do tab completion
                 const clicmd_t *cmd, *pstart = NULL, *pend = NULL;
@@ -562,6 +560,5 @@ void cliProcess(void)
                 cliWrite(c);
             }
             i++;
-        }
     }
 }
