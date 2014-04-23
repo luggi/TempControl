@@ -358,7 +358,7 @@
             <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--c99 --gnu</MiscControls>
+              <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F4XX</Define>
               <Undefine></Undefine>
               <IncludePath>.\lib\STM32F4xx_StdPeriph_Driver\inc;.\lib\CMSIS\ST\STM32F4xx\Include;.\lib\CMSIS\Include;.\lib\STM32F4xx_StdPeriph_Driver\src;.\;.\lib\usb_cdc_lib</IncludePath>
@@ -458,6 +458,11 @@
               <FileName>drv_max31855.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\drv_max31855.c</FilePath>
+            </File>
+            <File>
+              <FileName>autoTuning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\autoTuning.c</FilePath>
             </File>
           </Files>
         </Group>
