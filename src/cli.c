@@ -71,6 +71,7 @@ const clivalue_t valueTable[] = {
     {"voltage", VAR_FLOAT, &dac.voltsOutput, 0, 10},
     {"current", VAR_FLOAT, &dac.ampereOutput, 0, 10},
     {"maxAmps", VAR_FLOAT, &dac.maxAmps, 0, 10},
+    {"dacampereoffset", VAR_FLOAT, &dac.ampereOffset, -1, 1},
     {"ampscale", VAR_FLOAT, &dac.scale1ToA, 0, 1000},
     {"setpoint1", VAR_FLOAT, &setpoint[0], 0, 1000},
     {"setpoint2", VAR_FLOAT, &setpoint[1], 0, 1000},

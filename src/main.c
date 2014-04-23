@@ -57,13 +57,13 @@ int main(void)
     UB_DAC_Init(DUAL_DAC);
 
     dac.ampereOffset = -0.06f;  // todo make init set defaults function with eeprom recall
-    dac.scale1ToA = 613.2f;
-    dac.maxAmps = 3.1f;
+    dac.scale1ToA = 475.2f;
+    dac.maxAmps = 3.3f;
 
     config.manualMode = 0;
     config.cycletime = 1000;
 
-    pid_init(&pid1, 0.8f, 0.01f, 0.5f, 9.0f, outputDacCurrentfromPID);
+    pid_init(&pid1, 0.8f, 0.01f, 0.5f, 0.0f, 9.0f, outputDacCurrentfromPID);
 
     while (1) {
         if (UB_USB_CDC_GetStatus() == USB_CDC_CONNECTED)

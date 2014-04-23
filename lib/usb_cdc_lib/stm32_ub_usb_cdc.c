@@ -152,7 +152,7 @@ char UB_USB_CDC_GetChar(void)
 
 uint8_t UB_USB_CDC_DataIsReady(void)
 {
-    UB_VCP_DataisReady();
+    return UB_VCP_DataisReady();
 }
 
 
