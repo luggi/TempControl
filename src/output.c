@@ -10,6 +10,11 @@ void outputCurrentToDac(float current)
     UB_DAC_SetDAC1(convertCurrentToDacOutput(current));
 }
 
+void outputVoltageToDac(float voltage)
+{
+    UB_DAC_SetDAC2(convertVoltageToDacOutput(voltage) - 10); // subtract offset and output voltage
+}
+
 void outputDacCurrentfromPID(float output)
 {
     if (output < 0.0f)
@@ -30,5 +35,14 @@ static uint32_t convertCurrentToDacOutput(float current)
     } else {
         GPIOB->BSRRL = 0x8000;  // set PB15 high
         return 0;
+    }
+}
+
+static uint32_t convertVoltageToDacOutput(float voltage)
+{
+    if ( voltage > dac.maxVoltage) {
+        return 0;
+    } else {
+        return lrintf((dac.voltageOffset + voltage) * dac.scale2ToV);
     }
 }

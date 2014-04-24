@@ -58,9 +58,12 @@ int main(void)
 
     dac.ampereOffset = -0.06f;  // todo make init set defaults function with eeprom recall
     dac.scale1ToA = 475.2f;
-    dac.maxAmps = 3.3f;
+    dac.maxAmps = 5.0f;
+    dac.scale2ToV = 394.0f;
+    dac.maxVoltage = 10.0f;
+    dac.voltageOffset = 0.054;
 
-    config.manualMode = 0;
+    config.manualMode = 1;
     config.cycletime = 1000;
 
     pid_init(&pid1, 0.8f, 0.01f, 0.5f, 0.0f, 9.0f, outputDacCurrentfromPID);
@@ -69,8 +72,10 @@ int main(void)
         if (UB_USB_CDC_GetStatus() == USB_CDC_CONNECTED)
             cliProcess();
 
-        if (config.manualMode)
+        if (config.manualMode) {
             outputCurrentToDac(dac.ampereOutput);
+            outputVoltageToDac(dac.voltsOutput);
+        }
 
         time_now = millis();
         if (interval < time_now && !config.manualMode) {
