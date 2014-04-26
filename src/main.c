@@ -1,4 +1,4 @@
-/* Includes ------------------------------------------------------------------*/
+ /* Includes ------------------------------------------------------------------*/
 #include "board.h"
 
 
@@ -50,6 +50,7 @@ int main(void)
      */
     uint32_t interval = 100;
     uint32_t time_now;
+    char buffer[8];
 
     systemInit();
     init_GPIO();
@@ -58,12 +59,13 @@ int main(void)
 
     dac.ampereOffset = -0.06f;  // todo make init set defaults function with eeprom recall
     dac.scale1ToA = 475.2f;
-    dac.maxAmps = 5.0f;
+    dac.maxAmps = 8.0f;
     dac.scale2ToV = 394.0f;
     dac.maxVoltage = 10.0f;
     dac.voltageOffset = 0.054;
 
     config.manualMode = 1;
+    config.debug = 0;
     config.cycletime = 1000;
 
     pid_init(&pid1, 0.8f, 0.01f, 0.5f, 0.0f, 9.0f, outputDacCurrentfromPID);
@@ -78,14 +80,15 @@ int main(void)
         }
 
         time_now = millis();
-        if (interval < time_now && !config.manualMode) {
+        if (interval < time_now) {
             interval = time_now + config.cycletime;
 
             //temperature[SENSOR1] = read_celsius(SENSOR1);
             temperature[SENSOR2] = read_celsius(SENSOR2);
-
-            pid_calc(&pid1, setpoint[1], temperature[SENSOR2], (1000.0f / (float) config.cycletime));
-
+            if(!config.manualMode)
+                pid_calc(&pid1, setpoint[1], temperature[SENSOR2], ((float) config.cycletime / 1000.0f));
+            if(config.debug == 1)
+                printf("Temperature2: %s \r\n",ftoa(temperature[SENSOR2], buffer));
         }
     }
 }

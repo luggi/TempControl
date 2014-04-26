@@ -42,4 +42,5 @@
 typedef struct config_t {
     uint8_t manualMode;
     uint32_t cycletime;
+    uint8_t debug;
 } config_t;

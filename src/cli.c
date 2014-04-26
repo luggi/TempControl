@@ -1,4 +1,5 @@
 #include "board.h"
+#include "cli.h"
 
 // we unset this on 'exit'
 extern uint8_t cliMode;
@@ -26,7 +27,7 @@ static char cliBuffer[48];
 static uint32_t bufferIndex = 0;
 
 static float _atof(const char *p);
-static char *ftoa(float x, char *floatString);
+// static char *ftoa(float x, char *floatString);
 
 typedef struct {
     const char *name;
@@ -81,6 +82,7 @@ const clivalue_t valueTable[] = {
     {"pid1Pterm", VAR_FLOAT, &pid1.P, 0, 100},
     {"pid1Iterm", VAR_FLOAT, &pid1.I, 0, 10},
     {"pid1Dterm", VAR_FLOAT, &pid1.D, 0, 10},
+    {"debug", VAR_UINT8, &config.debug, 0, 1},
 };
 
 #define VALUE_COUNT (sizeof(valueTable) / sizeof(clivalue_t))
@@ -228,7 +230,7 @@ static float _atof(const char *p)
 ///////////////////////////////////////////////////////////////////////////////
 // FTOA
 ///////////////////////////////////////////////////////////////////////////////
-static char *ftoa(float x, char *floatString)
+char *ftoa(float x, char *floatString)
 {
     int32_t value;
     char intString1[12];

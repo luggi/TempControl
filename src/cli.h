@@ -11,5 +11,6 @@
 extern uint8_t cliMode;
 
 void cliProcess(void);
+char *ftoa(float x, char *floatString);
 
 #endif                          /* CLI_H_ */

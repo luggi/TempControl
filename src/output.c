@@ -19,8 +19,8 @@ void outputDacCurrentfromPID(float output)
 {
     if (output < 0.0f)
         output = 0.0f;
-    if (output > 9.0f)
-        output = 9.0f;
+    if (output > (dac.maxAmps * dac.maxAmps))
+        output = dac.maxAmps * dac.maxAmps;
 
     output = sqrtf(output);     // make it proportional to the powe (P~I^2)
 
@@ -29,7 +29,7 @@ void outputDacCurrentfromPID(float output)
 
 static uint32_t convertCurrentToDacOutput(float current)
 {
-    if ((current >= fabsf(dac.ampereOffset)) && (current < dac.maxAmps)) {
+    if ((current >= fabsf(dac.ampereOffset)) && (current <= dac.maxAmps)) {
         GPIOB->BSRRH = 0x8000;  // set PB15 low
         return lrintf((dac.ampereOffset + current) * dac.scale1ToA);
     } else {
