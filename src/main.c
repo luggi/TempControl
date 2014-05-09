@@ -6,12 +6,8 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Global variables ---------------------------------------------------------*/
-extern dac_t dac;
-config_t config;
-float temperature[2];
-float setpoint[2];
-pid_t pid1;
-pid_t pid2;
+extern config_t cfg;
+control_t control;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 int fputc(int c, FILE * f)
@@ -42,7 +38,7 @@ set pid1Dterm =  0.500
   */
 int main(void)
 {
-    /*!< At this stage the microcontroller clock setting is already configured, 
+    /*!< At this stage the microcontroller clock setting is already cfgred, 
        this is done through SystemInit() function which is called from startup
        file (startup_stm32f4xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
@@ -57,38 +53,36 @@ int main(void)
 
     UB_DAC_Init(DUAL_DAC);
 
-    dac.ampereOffset = -0.06f;  // todo make init set defaults function with eeprom recall
-    dac.scale1ToA = 475.2f;
-    dac.maxAmps = 8.0f;
-    dac.scale2ToV = 394.0f;
-    dac.maxVoltage = 10.0f;
-    dac.voltageOffset = 0.054;
-
-    config.manualMode = 1;
-    config.debug = 0;
-    config.cycletime = 1000;
-
-    pid_init(&pid1, 0.8f, 0.01f, 0.5f, 0.0f, 9.0f, outputDacCurrentfromPID);
+    control.setpoint[PID1] = 0;
+    control.setpoint[PID2] = 0;
+    
+    cfg.eeprom = read_config();
 
     while (1) {
         if (UB_USB_CDC_GetStatus() == USB_CDC_CONNECTED)
             cliProcess();
 
-        if (config.manualMode) {
-            outputCurrentToDac(dac.ampereOutput);
-            outputVoltageToDac(dac.voltsOutput);
+        if (cfg.manualMode) {
+            outputCurrentToDac(cfg.output.internalAmpereOutput);
+            outputVoltageToDac(cfg.output.voltageOutput);
         }
 
         time_now = millis();
         if (interval < time_now) {
-            interval = time_now + config.cycletime;
+            interval = time_now + cfg.cycletime;
 
-            //temperature[SENSOR1] = read_celsius(SENSOR1);
-            temperature[SENSOR2] = read_celsius(SENSOR2);
-            if(!config.manualMode)
-                pid_calc(&pid1, setpoint[1], temperature[SENSOR2], ((float) config.cycletime / 1000.0f));
-            if(config.debug == 1)
-                printf("Temperature2: %s \r\n",ftoa(temperature[SENSOR2], buffer));
+            control.temperature[SENSOR1] = read_celsius(SENSOR1);
+            control.temperature[SENSOR2] = read_celsius(SENSOR2);
+            if (!cfg.manualMode) {
+                pid_calc(&cfg.pid1, control.setpoint[PID1], control.temperature[SENSOR1], ((float) cfg.cycletime / 1000.0f));
+                pid_calc(&cfg.pid2, control.setpoint[PID2], control.temperature[SENSOR2], ((float) cfg.cycletime / 1000.0f));
+            }
+            
+            if (cfg.debug == 1) {
+                printf("Temperature1: %s \r\n",ftoa(control.temperature[SENSOR1], buffer));
+                printf("Temperature2: %s \r\n",ftoa(control.temperature[SENSOR2], buffer));
+            }
+                
         }
     }
 }

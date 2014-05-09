@@ -13,11 +13,8 @@ static void cliStatus(char *cmdline);
 static void cliVersion(char *cmdline);
 
 // include global vars here
-extern dac_t dac;
-extern pid_t pid1;
-extern config_t config;
-extern float temperature[2];
-extern float setpoint[2];
+extern config_t cfg;
+extern control_t control;
 
 // signal that we're in cli mode
 uint8_t cliMode = 0;
@@ -67,22 +64,28 @@ typedef struct {
 } clivalue_t;
 
 const clivalue_t valueTable[] = {
-    {"cycleTime", VAR_UINT32, &config.cycletime, 10, 5000},
-    {"manualMode", VAR_UINT8, &config.manualMode, 0, 1},
-    {"voltage", VAR_FLOAT, &dac.voltsOutput, 0, 10},
-    {"maxvoltage", VAR_FLOAT, &dac.maxVoltage, 0, 20},
-    {"current", VAR_FLOAT, &dac.ampereOutput, 0, 10},
-    {"maxAmps", VAR_FLOAT, &dac.maxAmps, 0, 10},
-    {"dacampereoffset", VAR_FLOAT, &dac.ampereOffset, -1, 1},
-    {"ampscale", VAR_FLOAT, &dac.scale1ToA, 0, 1000},
-    {"scalevolts", VAR_FLOAT, &dac.scale2ToV, 0, 1000},
-    {"dacvoltoffset", VAR_FLOAT, &dac.voltageOffset, 0, 1},
-    {"setpoint1", VAR_FLOAT, &setpoint[0], 0, 1000},
-    {"setpoint2", VAR_FLOAT, &setpoint[1], 0, 1000},
-    {"pid1Pterm", VAR_FLOAT, &pid1.P, 0, 100},
-    {"pid1Iterm", VAR_FLOAT, &pid1.I, 0, 10},
-    {"pid1Dterm", VAR_FLOAT, &pid1.D, 0, 10},
-    {"debug", VAR_UINT8, &config.debug, 0, 1},
+    {"cycleTime_ms", VAR_UINT32, &cfg.cycletime, 10, 5000},
+    {"manualMode", VAR_UINT8, &cfg.manualMode, 0, 1},
+    {"voltage", VAR_FLOAT, &cfg.output.voltageOutput, 0, 10},
+    {"current", VAR_FLOAT, &cfg.output.internalAmpereOutput, 0, 10},
+    {"maxvoltage", VAR_FLOAT, &cfg.output.maxVoltage, 0, 20},
+    {"maxAmps", VAR_FLOAT, &cfg.output.maxAmps, 0, 10},
+    {"dacampereoffset", VAR_FLOAT, &cfg.output.ampereOffset, -1, 1},
+    {"dac1ampscale", VAR_FLOAT, &cfg.output.scaleDAC1ToA, 0, 1000},
+    {"dac2scalevolts", VAR_FLOAT, &cfg.output.scaleDAC2ToV, 0, 1000},
+    {"scalevoltstoamps", VAR_FLOAT, &cfg.output.scaleVoltageToAmpere, 0, 100},
+    {"dacvoltoffset", VAR_FLOAT, &cfg.output.voltageOffset, 0, 1},
+    {"setpoint1", VAR_FLOAT, &control.setpoint[PID1], 0, 1000},
+    {"setpoint2", VAR_FLOAT, &control.setpoint[PID2], 0, 1000},
+    {"pid1Pterm", VAR_FLOAT, &cfg.pid1.P, 0, 100},
+    {"pid1Iterm", VAR_FLOAT, &cfg.pid1.I, 0, 10},
+    {"pid1Dterm", VAR_FLOAT, &cfg.pid1.D, 0, 10},
+    {"pid1Windup", VAR_FLOAT, &cfg.pid1.windup, 0, 1000},
+    {"pid2Pterm", VAR_FLOAT, &cfg.pid2.P, 0, 100},
+    {"pid2Iterm", VAR_FLOAT, &cfg.pid2.I, 0, 10},
+    {"pid2Dterm", VAR_FLOAT, &cfg.pid2.D, 0, 10},
+    {"pid2Windup", VAR_FLOAT, &cfg.pid2.windup, 0, 1000},
+    {"debug", VAR_UINT8, &cfg.debug, 0, 1},
 };
 
 #define VALUE_COUNT (sizeof(valueTable) / sizeof(clivalue_t))
@@ -291,8 +294,8 @@ static int cliCompare(const void *a, const void *b)
 
 static void cliDefaults(char *cmdline)
 {
+    resetConf();
     cliPrint("Resetting to defaults...\r\n");
-    cliPrint("Rebooting...");
     delay(10);
 }
 
@@ -326,7 +329,10 @@ static void cliHelp(char *cmdline)
 
 static void cliSave(char *cmdline)
 {
-    cliPrint("saving");
+    if(save_config())
+        cliPrint("data saved");
+    else 
+        cliPrint("failed");
 }
 
 static void cliPrint(const char *str)
@@ -465,8 +471,9 @@ static void cliStatus(char *cmdline)
     char buf[10];
 
     printf("System Uptime: %d seconds\r\n", millis() / 1000);
-    printf("Temperature1: %s degC \r\n", ftoa(temperature[SENSOR1], buf));
-    printf("Temperature2: %s degC \r\n", ftoa(temperature[SENSOR2], buf));
+    printf("Temperature1: %s degC \r\n", ftoa(control.temperature[SENSOR1], buf));
+    printf("Temperature2: %s degC \r\n", ftoa(control.temperature[SENSOR2], buf));
+    printf("eeprom: %d\n\r", cfg.eeprom);
 }
 
 static void cliVersion(char *cmdline)

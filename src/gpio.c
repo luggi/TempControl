@@ -41,7 +41,7 @@ void init_GPIO(void)
     GPIO_Init(GPIOB, &GPIO_InitStruct); // this passes the configuration to the Init function which takes care of the low level stuff
 
 
-    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_15;       // we want to configure PE14 PE15
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14;       // we want to configure PE14 PE15
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;  // we want it to be an input
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_25MHz;      // this sets the GPIO modules clock speed
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP; // this sets the pin type to push / pull (as opposed to open drain)

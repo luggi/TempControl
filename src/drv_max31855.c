@@ -1,6 +1,7 @@
 #include "board.h"
 #include "drv_max31855.h"
 #include "drv_max31855.h"
+
 static uint32_t raw_read(int sensor)
 {
     int i;

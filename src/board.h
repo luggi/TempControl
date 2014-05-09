@@ -18,6 +18,7 @@
 #include "stm32f4xx_i2c.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx.h"          // Device header
+#include "stm32f4xx_flash.h"
 
 #include "core_cm4.h"
 #include "drv_system.h"         // timers, delays, etc
@@ -28,19 +29,48 @@
 #include "output.h"
 #include "pid.h"
 #include "drv_max31855.h"
+#include "drv_eeprom.h"
+#include "config.h"
 
 
 #ifndef M_PI
 #define M_PI       3.14159265358979323846f
 #endif                          /* M_PI */
 
-#define SENSOR1 0
-#define SENSOR2 1
+enum sensors {
+    SENSOR1 = 0,
+    SENSOR2,
+    TEMPERATURE_SENSOR_COUNT
+};
 
+enum pids {
+    PID1 = 0,
+    PID2,
+    PID_CONTROLLER_COUNT
+};
+
+enum outputs {
+    INTERNAL_CURRENT,
+    EXTERNAL_CURRENT,
+    OFF
+};
+
+typedef struct control_t {
+    float temperature[TEMPERATURE_SENSOR_COUNT];
+    float setpoint[PID_CONTROLLER_COUNT];
+} control_t;
 
 // main settings
 typedef struct config_t {
+    uint8_t magic_be;
+    uint8_t magic_ef;
+    int8_t eeprom;
     uint8_t manualMode;
     uint32_t cycletime;
     uint8_t debug;
+    uint8_t pid1outputChannel;
+    uint8_t pid2outputChannel;
+    pid_t pid1;
+    pid_t pid2;
+    output_t output;
 } config_t;
