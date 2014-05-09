@@ -469,6 +469,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\config.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_adcdma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\drv_adcdma.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -528,6 +533,11 @@
               <FileName>stm32f4xx_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\lib\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lib\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -8,8 +8,11 @@
 /* Global variables ---------------------------------------------------------*/
 extern config_t cfg;
 control_t control;
+float input_voltage[ADC_CHANNEL_COUNT];
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
+void adc_get_measurements(void);
+
 int fputc(int c, FILE * f)
 {
     UB_USB_CDC_SendChar(c);
@@ -44,7 +47,8 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f4xx.c file
      */
-    uint32_t interval = 100;
+    uint32_t interval1 = 100;
+    uint32_t interval2 = 100;
     uint32_t time_now;
     char buffer[8];
 
@@ -52,6 +56,8 @@ int main(void)
     init_GPIO();
 
     UB_DAC_Init(DUAL_DAC);
+    
+    UB_ADC2_DMA_Init();
 
     control.setpoint[PID1] = 0;
     control.setpoint[PID2] = 0;
@@ -68,8 +74,8 @@ int main(void)
         }
 
         time_now = millis();
-        if (interval < time_now) {
-            interval = time_now + cfg.cycletime;
+        if (interval1 < time_now) {
+            interval1 = time_now + cfg.cycletime;
 
             control.temperature[SENSOR1] = read_celsius(SENSOR1);
             control.temperature[SENSOR2] = read_celsius(SENSOR2);
@@ -81,8 +87,23 @@ int main(void)
             if (cfg.debug == 1) {
                 printf("Temperature1: %s \r\n",ftoa(control.temperature[SENSOR1], buffer));
                 printf("Temperature2: %s \r\n",ftoa(control.temperature[SENSOR2], buffer));
+                printf("ADC_MOSFET_A %s \r\n",ftoa(input_voltage[0], buffer));
+//                printf("ADC_MOSFET_V %s \r\n", ftoa(input_voltage[1], buffer));
+//                printf("ADC_VIN %s \r\n", ftoa(input_voltage[2], buffer));
+//                printf("ADC_SENS %s \r\n\r\n", ftoa(input_voltage[3], buffer));
             }
                 
         }
+        if (interval2 < time_now) {
+            interval2 = time_now + 10;
+            adc_get_measurements();
+        }
+    }
+}
+
+void adc_get_measurements(void) {
+    for(int i=0; i < ADC_CHANNEL_COUNT; i++)
+    {
+        input_voltage[i] = ((float)UB_ADC2_DMA_Read(i) / 4095.0f) * cfg.input.scale[i];
     }
 }

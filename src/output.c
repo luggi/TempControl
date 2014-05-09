@@ -4,7 +4,6 @@
 
 #define DACMAX 4095
 
-output_t output;
 extern config_t cfg;
 
 void outputCurrentToDac(float current)
@@ -49,13 +48,14 @@ void outputCurrentfromPID2(float output)
 
 static uint32_t convertCurrentToDacOutput(float current)
 {
-    if ((current >= fabsf(cfg.output.ampereOffset)) && (current <= output.maxAmps)) {
-        GPIOB->BSRRH = 0x8000;  // set PB15 low
-        return lrintf((cfg.output.ampereOffset + current) * output.scaleDAC1ToA);
+    if ((current >= fabsf(cfg.output.ampereOffset)) && (current <= cfg.output.maxAmps)) {
+        GPIOB->BSRRH = GPIO_Pin_15;  // set PB15 low
+        return lrintf((cfg.output.ampereOffset + current) * cfg.output.scaleDAC1ToA);
     } else if (current > cfg.output.maxAmps) {
+        GPIOB->BSRRH = GPIO_Pin_15;  // set PB15 low
         return lrintf((cfg.output.ampereOffset + cfg.output.maxAmps) * cfg.output.scaleDAC1ToA);
     } else {
-        GPIOB->BSRRL = 0x8000;  // set PB15 high
+        GPIOB->BSRRL = GPIO_Pin_15;  // set PB15 high
         return 0;
     }
 }

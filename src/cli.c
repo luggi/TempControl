@@ -15,6 +15,7 @@ static void cliVersion(char *cmdline);
 // include global vars here
 extern config_t cfg;
 extern control_t control;
+extern float input_voltage[ADC_CHANNEL_COUNT];
 
 // signal that we're in cli mode
 uint8_t cliMode = 0;
@@ -473,6 +474,10 @@ static void cliStatus(char *cmdline)
     printf("System Uptime: %d seconds\r\n", millis() / 1000);
     printf("Temperature1: %s degC \r\n", ftoa(control.temperature[SENSOR1], buf));
     printf("Temperature2: %s degC \r\n", ftoa(control.temperature[SENSOR2], buf));
+    printf("ADC_MOSFET_V %s \r\n",ftoa(input_voltage[0], buf));
+    printf("ADC_MOSFET_A %s \r\n", ftoa(input_voltage[1], buf));
+    printf("ADC_VIN %s \r\n", ftoa(input_voltage[2], buf));
+    printf("ADC_SENS %s \r\n", ftoa(input_voltage[3], buf));
     printf("eeprom: %d\n\r", cfg.eeprom);
 }
 

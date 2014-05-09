@@ -29,7 +29,7 @@
 #include "output.h"
 #include "pid.h"
 #include "drv_max31855.h"
-#include "drv_eeprom.h"
+#include "drv_adcdma.h"
 #include "config.h"
 
 
@@ -55,10 +55,22 @@ enum outputs {
     OFF
 };
 
+enum inputs {
+    VOLTAGE_MOSFET,
+    CURRENT_MOSFET,
+    VOLTAGE_INPUT,
+    VOLTAGE_SENSOR,
+    ADC_CHANNEL_COUNT
+};
+
 typedef struct control_t {
     float temperature[TEMPERATURE_SENSOR_COUNT];
     float setpoint[PID_CONTROLLER_COUNT];
 } control_t;
+
+typedef struct input_t {
+    float scale[ADC_CHANNEL_COUNT];
+} input_t;
 
 // main settings
 typedef struct config_t {
@@ -73,4 +85,7 @@ typedef struct config_t {
     pid_t pid1;
     pid_t pid2;
     output_t output;
+    input_t input;
 } config_t;
+
+

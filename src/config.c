@@ -51,8 +51,6 @@ void resetConf(void)
     cfg.magic_be = 0xBE;
     cfg.magic_ef = 0xEF;
     
-    printf("hallo?");
-    
     cfg.output.ampereOffset = -0.06f;  // todo make init set defaults function with eeprom recall
     cfg.output.scaleDAC1ToA = 475.2f;
     cfg.output.maxAmps = 8.0f;
@@ -60,6 +58,11 @@ void resetConf(void)
     cfg.output.maxVoltage = 10.0f;
     cfg.output.voltageOffset = 0.054;
     cfg.output.scaleVoltageToAmpere = 12.0f;
+    
+    cfg.input.scale[VOLTAGE_MOSFET] = 36.3f;
+    cfg.input.scale[CURRENT_MOSFET] = 10.32f;
+    cfg.input.scale[VOLTAGE_INPUT] = 18.81f;
+    cfg.input.scale[VOLTAGE_SENSOR] = 18.81f;
     
     pid_init(&cfg.pid1, 0.8f, 0.01f, 0.5f, 0.0f, 10.0f, outputCurrentfromPID1);
     pid_init(&cfg.pid2, 0.8f, 0.01f, 0.5f, 0.0f, 10.0f, outputCurrentfromPID2);
