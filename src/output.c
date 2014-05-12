@@ -5,10 +5,14 @@
 #define DACMAX 4095
 
 extern config_t cfg;
+extern float input_voltage[ADC_CHANNEL_COUNT];
 
 void outputCurrentToDac(float current)
 {
-    UB_DAC_SetDAC1(convertCurrentToDacOutput(current)); // subtract offset and output scaled voltage
+    if ((input_voltage[VOLTAGE_MOSFET] * input_voltage[CURRENT_MOSFET]) > cfg.output.maxPowerloss)
+        current = cfg.output.maxPowerloss / input_voltage[VOLTAGE_MOSFET];
+    
+        UB_DAC_SetDAC1(convertCurrentToDacOutput(current));
 }
 
 void outputVoltageToDac(float voltage)

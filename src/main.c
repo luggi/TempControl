@@ -80,8 +80,8 @@ int main(void)
             control.temperature[SENSOR1] = read_celsius(SENSOR1);
             control.temperature[SENSOR2] = read_celsius(SENSOR2);
             if (!cfg.manualMode) {
-                pid_calc(&cfg.pid1, control.setpoint[PID1], control.temperature[SENSOR1], ((float) cfg.cycletime / 1000.0f));
-                pid_calc(&cfg.pid2, control.setpoint[PID2], control.temperature[SENSOR2], ((float) cfg.cycletime / 1000.0f));
+                pid_calc(&cfg.pid1, control.setpoint[PID1], control.temperature[SENSOR1], ((float)cfg.cycletime / 1000.0f));
+                pid_calc(&cfg.pid2, control.setpoint[PID2], control.temperature[SENSOR2], ((float)cfg.cycletime / 1000.0f));
             }
             
             if (cfg.debug == 1) {

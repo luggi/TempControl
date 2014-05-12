@@ -58,6 +58,7 @@ void resetConf(void)
     cfg.output.maxVoltage = 10.0f;
     cfg.output.voltageOffset = 0.054;
     cfg.output.scaleVoltageToAmpere = 12.0f;
+    cfg.output.maxPowerloss = 10.0f;
     
     cfg.input.scale[VOLTAGE_MOSFET] = 36.3f;
     cfg.input.scale[CURRENT_MOSFET] = 10.32f;
