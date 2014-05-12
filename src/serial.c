@@ -2,7 +2,8 @@
 // Serial protocol parser
 //  
 //
-#include "board.h"
+/*#include "board.h"
+#include "crc16.h"
 
 extern config_t cfg;
 extern control_t control;
@@ -10,6 +11,7 @@ extern control_t control;
 static uint8_t calculate_CRC16(char *data, int length);
 static void compute_command(char * data, int length);
 void serial_reply_success(void);
+void serial_reply(char *data, int length, uint8_t command);
 
 enum state {
     STARTFRAME,
@@ -48,7 +50,6 @@ void parseSerialData(char byte)
     static int byteCounter = 0;
     static int payload_length = 0;
     static char buffer[200];
-    int counter = 0;
     
     switch(state) {
         case STARTFRAME:
@@ -118,6 +119,7 @@ static int32_t raw_to_int32_t(char *buffer, uint8_t *counter)
 
 static void compute_command(char *buffer, int byteCounter)
 {
+    char buf[100];
     uint8_t command;
     uint8_t counter = 0;
     command = buffer[COMMAND_POSITION];
@@ -184,7 +186,22 @@ static void compute_command(char *buffer, int byteCounter)
             serial_reply_success();
         break;
         
+        case READ_TEMPERATURES:
+        *((float*)(&buf[0])) = control.temperature[SENSOR1];
+        *((float*)(&buf[4])) = control.temperature[SENSOR2];
+        serial_reply(buf, 8, READ_TEMPERATURES);
+            
+        break;
+        
 
     }
     
 }
+
+static uint8_t calculate_CRC16(char *data, int length){
+    uint16_t crc16_1, crc16_2;
+    
+    crc16_1 = crc16_ccitt(data, length-2);
+    crc16_2 = (uint16_t)data[length] << 8 | data[length - 1];
+    return (crc16_1 == crc16_2);
+}*/

@@ -479,6 +479,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\serial.c</FilePath>
             </File>
+            <File>
+              <FileName>crc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\crc16.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
