@@ -85,9 +85,9 @@ int main(void)
             }
             
             if (cfg.debug == 1) {
-                printf("Temperature1: %s \r\n",ftoa(control.temperature[SENSOR1], buffer));
-                printf("Temperature2: %s \r\n",ftoa(control.temperature[SENSOR2], buffer));
-                printf("ADC_MOSFET_A %s \r\n",ftoa(input_voltage[0], buffer));
+                printf("%i;%sg\r\n",(millis()/1000),ftoa(control.temperature[SENSOR1], buffer));
+                //printf("Temperature2: %s \r\n",ftoa(control.temperature[SENSOR2], buffer));
+                //printf("ADC_MOSFET_A %s \r\n",ftoa(input_voltage[0], buffer));
 //                printf("ADC_MOSFET_V %s \r\n", ftoa(input_voltage[1], buffer));
 //                printf("ADC_VIN %s \r\n", ftoa(input_voltage[2], buffer));
 //                printf("ADC_SENS %s \r\n\r\n", ftoa(input_voltage[3], buffer));

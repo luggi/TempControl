@@ -79,6 +79,8 @@ const clivalue_t valueTable[] = {
     {"dacvoltoffset", VAR_FLOAT, &cfg.output.voltageOffset, 0, 1},
     {"setpoint1", VAR_FLOAT, &control.setpoint[PID1], 0, 1000},
     {"setpoint2", VAR_FLOAT, &control.setpoint[PID2], 0, 1000},
+    {"pid1outputchannel", VAR_UINT8, &cfg.pid1outputChannel, 0, 3},
+    {"pid2outputchannel", VAR_UINT8, &cfg.pid2outputChannel, 0, 3},
     {"pid1Pterm", VAR_FLOAT, &cfg.pid1.P, 0, 100},
     {"pid1Iterm", VAR_FLOAT, &cfg.pid1.I, 0, 10},
     {"pid1Dterm", VAR_FLOAT, &cfg.pid1.D, 0, 10},
