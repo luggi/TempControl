@@ -37,6 +37,8 @@
 #define M_PI       3.14159265358979323846f
 #endif                          /* M_PI */
 
+#define MAX_TEMP_VARIATION 15.0f
+
 enum sensors {
     SENSOR1 = 0,
     SENSOR2,
@@ -56,7 +58,7 @@ enum outputs {
 };
 
 enum inputs {
-    VOLTAGE_MOSFET,
+    VOLTAGE_MOSFET = 0,
     CURRENT_MOSFET,
     VOLTAGE_INPUT,
     VOLTAGE_SENSOR,
@@ -86,6 +88,7 @@ typedef struct config_t {
     pid_t pid2;
     output_t output;
     input_t input;
+    float temperature_averaging;
 } config_t;
 
 

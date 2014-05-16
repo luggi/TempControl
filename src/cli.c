@@ -89,7 +89,7 @@ const clivalue_t valueTable[] = {
     {"pid2Iterm", VAR_FLOAT, &cfg.pid2.I, 0, 10},
     {"pid2Dterm", VAR_FLOAT, &cfg.pid2.D, 0, 10},
     {"pid2Windup", VAR_FLOAT, &cfg.pid2.windup, 0, 1000},
-    {"debug", VAR_UINT8, &cfg.debug, 0, 1},
+    {"debug", VAR_UINT8, &cfg.debug, 0, 3},
 };
 
 #define VALUE_COUNT (sizeof(valueTable) / sizeof(clivalue_t))
