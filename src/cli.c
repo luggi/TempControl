@@ -475,8 +475,8 @@ static void cliStatus(char *cmdline)
     char buf[10];
 
     printf("System Uptime: %d seconds\r\n", millis() / 1000);
-    printf("Temperature1: %s degC \r\n", ftoa(control.temperature[SENSOR1], buf));
-    printf("Temperature2: %s degC \r\n", ftoa(control.temperature[SENSOR2], buf));
+    printf("Temperature1: %s degC \r\n", ftoa(control.temperature_smooth[SENSOR1], buf));
+    printf("Temperature2: %s degC \r\n", ftoa(control.temperature_smooth[SENSOR2], buf));
     printf("ADC_MOSFET_V %s \r\n",ftoa(input_voltage[0], buf));
     printf("ADC_MOSFET_A %s \r\n", ftoa(input_voltage[1], buf));
     printf("ADC_VIN %s \r\n", ftoa(input_voltage[2], buf));

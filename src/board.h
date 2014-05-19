@@ -67,6 +67,7 @@ enum inputs {
 
 typedef struct control_t {
     float temperature[TEMPERATURE_SENSOR_COUNT];
+    float temperature_smooth[TEMPERATURE_SENSOR_COUNT];
     float setpoint[PID_CONTROLLER_COUNT];
 } control_t;
 
