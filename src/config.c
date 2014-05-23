@@ -65,10 +65,12 @@ void resetConf(void)
     cfg.input.scale[VOLTAGE_INPUT] = 18.81f;
     cfg.input.scale[VOLTAGE_SENSOR] = 18.81f;
     
-    pid_init(&cfg.pid1, 0.1f, 0.00005f, 10.0f, 0.0f, 10.0f, outputCurrentfromPID1);
-    pid_init(&cfg.pid2, 0.8f, 0.01f, 0.5f, 0.0f, 10.0f, outputCurrentfromPID2);
-
+    pid_init(&cfg.pid1, 0.1f, 0.00005f, 15.0f, 0.0f, 10.0f, outputCurrentfromPID1);
+    pid_init(&cfg.pid2, 0.1f, 0.00001f, 15.0f, 0.0f, 10.0f, outputCurrentfromPID2);
+    
     cfg.manualMode = 1;
+    cfg.output.internalAmpereOutput = 0.0f;
+    cfg.output.voltageOutput = 0.0f;
     cfg.debug = 0;
     cfg.cycletime = 1000;
     cfg.pid1outputChannel = 1;

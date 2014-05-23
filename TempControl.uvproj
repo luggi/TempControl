@@ -430,9 +430,9 @@
               <FilePath>.\src\pid.c</FilePath>
             </File>
             <File>
-              <FileName>stm32_ub_dac.c</FileName>
+              <FileName>drv_dac.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\stm32_ub_dac.c</FilePath>
+              <FilePath>.\src\drv_dac.c</FilePath>
             </File>
             <File>
               <FileName>cli.c</FileName>

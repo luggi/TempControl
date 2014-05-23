@@ -2,7 +2,7 @@
 #define OUTPUT_H_ 
 
 #include "stm32f4xx.h"
-#include "stm32_ub_dac.h"
+#include "drv_dac.h"
 
 // dac settings
 typedef struct output_t {

@@ -23,7 +23,7 @@
 #include "core_cm4.h"
 #include "drv_system.h"         // timers, delays, etc
 #include "stm32_ub_usb_cdc.h"   // usb-serial
-#include "stm32_ub_dac.h"
+#include "drv_dac.h"
 #include "cli.h"
 #include "gpio.h"
 #include "output.h"

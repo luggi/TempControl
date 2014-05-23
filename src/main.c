@@ -92,19 +92,20 @@ int main(void)
             }
             else if (cfg.debug == 2)
             {
-                  printf("T1:%s;",ftoa(control.temperature[SENSOR1], buffer));
-                  printf("T2:%s;",ftoa(control.temperature[SENSOR2], buffer));
-                  printf("V:%s;", ftoa(input_voltage[VOLTAGE_MOSFET], buffer));
-                  printf("A:%s;",ftoa(input_voltage[CURRENT_MOSFET], buffer));
-                  printf("VIN:%s\r\n", ftoa(input_voltage[VOLTAGE_INPUT], buffer));
+                printf("T1:%s;",ftoa(control.temperature[SENSOR1], buffer));
+                printf("T2:%s;",ftoa(control.temperature[SENSOR2], buffer));
+                printf("V:%s;", ftoa(input_voltage[VOLTAGE_MOSFET], buffer));
+                printf("A:%s;",ftoa(input_voltage[CURRENT_MOSFET], buffer));
+                printf("VIN:%s\r\n", ftoa(input_voltage[VOLTAGE_INPUT], buffer));
             }
             else if (cfg.debug == 3)
             {
-                  printf("T1:%s;",ftoa(control.temperature[SENSOR1], buffer));
-                  printf("T1s:%s;",ftoa(control.temperature_smooth[SENSOR1], buffer));
-                  printf("V:%s;", ftoa(input_voltage[VOLTAGE_MOSFET], buffer));
-                  printf("A:%s;",ftoa(input_voltage[CURRENT_MOSFET], buffer));
-                  printf("VIN:%s\r\n", ftoa(input_voltage[VOLTAGE_INPUT], buffer));
+                printf("uT:%i;",millis()/1000);
+                printf("T1s:%s;",ftoa(control.temperature_smooth[SENSOR1], buffer));
+                printf("T2s:%s;",ftoa(control.temperature_smooth[SENSOR2], buffer));
+                printf("Vmosfet:%s;", ftoa(input_voltage[VOLTAGE_MOSFET], buffer));
+                printf("Amosfet:%s;",ftoa(input_voltage[CURRENT_MOSFET], buffer));
+                printf("Vsens:%s\r\n",ftoa(input_voltage[CURRENT_MOSFET], buffer));
             }
                 
         }
