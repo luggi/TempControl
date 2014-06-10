@@ -71,7 +71,7 @@ const clivalue_t valueTable[] = {
     {"current", VAR_FLOAT, &cfg.output.internalAmpereOutput, 0, 7},
     {"maxvoltage", VAR_FLOAT, &cfg.output.maxVoltage, 0, 20},
     {"maxAmps", VAR_FLOAT, &cfg.output.maxAmps, 0, 10},
-    {"maxPowerloss", VAR_FLOAT, &cfg.output.maxPowerloss, 0, 15},
+    {"maxPowerloss", VAR_FLOAT, &cfg.output.maxPowerloss, 0, 25},
     {"dacampereoffset", VAR_FLOAT, &cfg.output.ampereOffset, -1, 1},
     {"dac1ampscale", VAR_FLOAT, &cfg.output.scaleDAC1ToA, 0, 1000},
     {"dac2scalevolts", VAR_FLOAT, &cfg.output.scaleDAC2ToV, 0, 1000},

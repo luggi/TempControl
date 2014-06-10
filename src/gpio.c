@@ -57,7 +57,7 @@ void init_GPIO(void)
     
     GPIO_InitStruct.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_1;     // PC1, PC3 fet-off and REM-SB
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;   // we want it to be an input
-    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;      // this sets the GPIO modules clock speed
+    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_25MHz;      // this sets the GPIO modules clock speed
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP; // this sets the pin type to push / pull (as opposed to open drain)
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;       // 
     GPIO_Init(GPIOC, &GPIO_InitStruct); // this passes the configuration to the Init function which takes care of the low level stuff
