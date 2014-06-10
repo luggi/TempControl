@@ -33,7 +33,7 @@ void init_GPIO(void)
      * the USER button on the board is connected
      * between this pin and VCC.
      */
-    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_15 | GPIO_Pin_12;       // we want to configure PB12 PB15
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13;       // we want to configure PB13 SCK
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;  // we want it to be an input
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;      // this sets the GPIO modules clock speed
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP; // this sets the pin type to push / pull (as opposed to open drain)
@@ -41,18 +41,25 @@ void init_GPIO(void)
     GPIO_Init(GPIOB, &GPIO_InitStruct); // this passes the configuration to the Init function which takes care of the low level stuff
 
 
-    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14;       // we want to configure PE14 PE15
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14;       // we want to configure PE13 PE14
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;  // we want it to be an input
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_25MHz;      // this sets the GPIO modules clock speed
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP; // this sets the pin type to push / pull (as opposed to open drain)
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
     GPIO_Init(GPIOE, &GPIO_InitStruct); // this passes the configuration to the Init function which takes care of the low level stuff
 
-    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13;     // we want to configure PB13
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_14;     // MISO-PIN
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;   // we want it to be an input
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;      // this sets the GPIO modules clock speed
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP; // this sets the pin type to push / pull (as opposed to open drain)
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;       // 
     GPIO_Init(GPIOB, &GPIO_InitStruct); // this passes the configuration to the Init function which takes care of the low level stuff
+    
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_1;     // PC1, PC3 fet-off and REM-SB
+    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;   // we want it to be an input
+    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;      // this sets the GPIO modules clock speed
+    GPIO_InitStruct.GPIO_OType = GPIO_OType_PP; // this sets the pin type to push / pull (as opposed to open drain)
+    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;       // 
+    GPIO_Init(GPIOC, &GPIO_InitStruct); // this passes the configuration to the Init function which takes care of the low level stuff
 
 }

@@ -63,7 +63,8 @@ void resetConf(void)
     cfg.input.scale[VOLTAGE_MOSFET] = 36.3f;
     cfg.input.scale[CURRENT_MOSFET] = 10.32f;
     cfg.input.scale[VOLTAGE_INPUT] = 18.81f;
-    cfg.input.scale[VOLTAGE_SENSOR] = 18.81f;
+    cfg.input.scale[VOLTAGE_VMON] = 10.56f;
+    cfg.input.scale[VOLTAGE_CMON] = 10.56f;
     
     pid_init(&cfg.pid1, 0.1f, 0.00005f, 15.0f, 0.0f, 10.0f, outputCurrentfromPID1);
     pid_init(&cfg.pid2, 0.1f, 0.00001f, 15.0f, 0.0f, 10.0f, outputCurrentfromPID2);

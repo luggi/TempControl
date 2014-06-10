@@ -25,10 +25,11 @@ typedef enum {
   ADC_PA0 = 0,
   ADC_PA1 = 1,
   ADC_PA2 = 2,
-  ADC_PA3 = 3
+  ADC_PA3 = 3,
+  ADC_PA6 = 4,
 }ADC2d_NAME_t;
 
-#define  ADC2d_ANZ   4 // Anzahl von ADC2d_NAME_t (maximum = 16)
+#define  ADC2d_ANZ   5 // Anzahl von ADC2d_NAME_t (maximum = 16)
 
 
 //--------------------------------------------------------------
@@ -57,8 +58,8 @@ typedef enum {
 //--------------------------------------------------------------
 
 //#define ADC2d_VORTEILER     ADC_Prescaler_Div2 // Frq = 42 MHz
-#define ADC2d_VORTEILER     ADC_Prescaler_Div4   // Frq = 21 MHz
-//#define ADC2d_VORTEILER     ADC_Prescaler_Div6 // Frq = 14 MHz
+//#define ADC2d_VORTEILER     ADC_Prescaler_Div4   // Frq = 21 MHz
+#define ADC2d_VORTEILER     ADC_Prescaler_Div6 // Frq = 14 MHz
 //#define ADC2d_VORTEILER     ADC_Prescaler_Div8 // Frq = 10.5 MHz
 
 

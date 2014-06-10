@@ -25,9 +25,10 @@
 ADC2d_t ADC2d[] = {
   //NAME  ,PORT , PIN      , CLOCK              , Kanal
   {ADC_PA0, GPIOA, GPIO_Pin_0, RCC_AHB1Periph_GPIOA, ADC_Channel_0},
-  {ADC_PA1, GPIOA, GPIO_Pin_1, RCC_AHB1Periph_GPIOC, ADC_Channel_1},
-  {ADC_PA2, GPIOA, GPIO_Pin_2, RCC_AHB1Periph_GPIOC, ADC_Channel_2},
-  {ADC_PA3, GPIOA, GPIO_Pin_3, RCC_AHB1Periph_GPIOC, ADC_Channel_3},
+  {ADC_PA1, GPIOA, GPIO_Pin_1, RCC_AHB1Periph_GPIOA, ADC_Channel_1},
+  {ADC_PA2, GPIOA, GPIO_Pin_2, RCC_AHB1Periph_GPIOA, ADC_Channel_2},
+  {ADC_PA3, GPIOA, GPIO_Pin_3, RCC_AHB1Periph_GPIOA, ADC_Channel_3},
+  {ADC_PA6, GPIOA, GPIO_Pin_3, RCC_AHB1Periph_GPIOA, ADC_Channel_6},
 };
 
 

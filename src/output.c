@@ -53,13 +53,13 @@ void outputCurrentfromPID2(float output)
 static uint32_t convertCurrentToDacOutput(float current)
 {
     if ((current >= fabsf(cfg.output.ampereOffset)) && (current <= cfg.output.maxAmps)) {
-        GPIOB->BSRRH = GPIO_Pin_15;  // set PB15 low
+        GPIOC->BSRRH = GPIO_Pin_3;  // set PB15 low
         return lrintf((cfg.output.ampereOffset + current) * cfg.output.scaleDAC1ToA);
     } else if (current > cfg.output.maxAmps) {
-        GPIOB->BSRRH = GPIO_Pin_15;  // set PB15 low
+        GPIOC->BSRRH = GPIO_Pin_3;  // set PB15 low
         return lrintf((cfg.output.ampereOffset + cfg.output.maxAmps) * cfg.output.scaleDAC1ToA);
     } else {
-        GPIOB->BSRRL = GPIO_Pin_15;  // set PB15 high
+        GPIOC->BSRRL = GPIO_Pin_3;  // set PB15 high
         return 0;
     }
 }

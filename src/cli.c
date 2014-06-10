@@ -477,10 +477,11 @@ static void cliStatus(char *cmdline)
     printf("System Uptime: %d seconds\r\n", millis() / 1000);
     printf("Temperature1: %s degC \r\n", ftoa(control.temperature_smooth[SENSOR1], buf));
     printf("Temperature2: %s degC \r\n", ftoa(control.temperature_smooth[SENSOR2], buf));
-    printf("ADC_MOSFET_V %s \r\n",ftoa(input_voltage[0], buf));
-    printf("ADC_MOSFET_A %s \r\n", ftoa(input_voltage[1], buf));
-    printf("ADC_VIN %s \r\n", ftoa(input_voltage[2], buf));
-    printf("ADC_SENS %s \r\n", ftoa(input_voltage[3], buf));
+    printf("MOSFET_V: %s \r\n",ftoa(input_voltage[0], buf));
+    printf("MOSFET_A: %s \r\n", ftoa(input_voltage[1], buf));
+    printf("VIN: %s \r\n", ftoa(input_voltage[VOLTAGE_INPUT], buf));
+    printf("VMON: %s \r\n", ftoa(input_voltage[VOLTAGE_VMON], buf));
+    printf("CMON: %s \r\n", ftoa(input_voltage[VOLTAGE_CMON], buf));
     printf("eeprom: %d\n\r", cfg.eeprom);
 }
 

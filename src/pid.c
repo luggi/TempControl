@@ -27,17 +27,23 @@ void pid_init(pid_t * pidData, float P, float I, float D, float Tf, float windup
     pidData->write = outputPtr;
     pidData->Tf = Tf;
 }
+#define F_CUT_ACCZ 0.2f // 0.2Hz -> ~5 seconds weighted averaging
+static const float fc_dterm = 0.5f / (M_PI * F_CUT_ACCZ);
 
 void pid_calc(pid_t * pidData, float setpoint, float processValue, float deltaT)
 {
-    float error, output, outputNew;
+    float error, output, outputNew, dTerm;
+    static float dTerm_filtered = 0;
 
     error = setpoint - processValue;
 
     pidData->Iterm += error * pidData->I;
     pidData->Iterm = constrain(0, pidData->windup, pidData->Iterm);
+    
+    dTerm = ((processValue - pidData->old_processValue) * pidData->D / deltaT);
+    dTerm_filtered = dTerm_filtered + (deltaT / (fc_dterm + deltaT)) * (dTerm - dTerm_filtered);
 
-    output = (error * pidData->P) + (pidData->Iterm * deltaT) - ((processValue - pidData->old_processValue) * pidData->D / deltaT);
+    output = (error * pidData->P) + (pidData->Iterm * deltaT) - dTerm_filtered;
 
     pidData->old_processValue = processValue;
     
