@@ -9,7 +9,7 @@ extern float input_voltage[ADC_CHANNEL_COUNT];
 
 void outputCurrentToDac(float current)
 {
-    if ((input_voltage[VOLTAGE_MOSFET] * input_voltage[CURRENT_MOSFET]) > cfg.output.maxPowerloss)
+    if ((input_voltage[VOLTAGE_MOSFET] * current) > cfg.output.maxPowerloss)
         current = cfg.output.maxPowerloss / input_voltage[VOLTAGE_MOSFET];
     
         UB_DAC_SetDAC1(convertCurrentToDacOutput(current));

@@ -51,17 +51,17 @@ void resetConf(void)
     cfg.magic_be = 0xBE;
     cfg.magic_ef = 0xEF;
     
-    cfg.output.ampereOffset = -0.06f;  // todo make init set defaults function with eeprom recall
-    cfg.output.scaleDAC1ToA = 475.2f;
-    cfg.output.maxAmps = 8.0f;
+    cfg.output.ampereOffset = -0.073f;  // todo make init set defaults function with eeprom recall
+    cfg.output.scaleDAC1ToA = 460.0f;
+    cfg.output.maxAmps = 5.0f;
     cfg.output.scaleDAC2ToV = 394.0f;
     cfg.output.maxVoltage = 10.0f;
     cfg.output.voltageOffset = 0.054;
-    cfg.output.scaleVoltageToAmpere = 12.0f;
+    cfg.output.scaleVoltageToAmpere = 1.0f/12.0f;
     cfg.output.maxPowerloss = 15.0f;
     
     cfg.input.scale[VOLTAGE_MOSFET] = 36.3f;
-    cfg.input.scale[CURRENT_MOSFET] = 10.32f;
+    cfg.input.scale[CURRENT_MOSFET] = 9.708f;
     cfg.input.scale[VOLTAGE_INPUT] = 18.81f;
     cfg.input.scale[VOLTAGE_VMON] = 10.56f;
     cfg.input.scale[VOLTAGE_CMON] = 10.56f;

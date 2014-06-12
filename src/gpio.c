@@ -26,6 +26,7 @@ void init_GPIO(void)
      * the GPIOA IO module
      */
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 
     /* Here the GPIOB module is initialized.
