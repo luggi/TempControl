@@ -72,7 +72,8 @@ int main(void)
     while (1) {
         if (UB_USB_CDC_GetStatus() == USB_CDC_CONNECTED)
             cliProcess();
-
+        
+        
         if (cfg.manualMode) {
             outputCurrentToDac(cfg.output.internalAmpereOutput);
             outputVoltageToDac(cfg.output.voltageOutput);

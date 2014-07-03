@@ -245,17 +245,17 @@ static float _atof(const char *p)
 char *ftoa(float x, char *floatString)
 {
     int32_t value;
-    char intString1[12];
-    char intString2[12] = { 0, };
+    char intString1[20];
+    char intString2[20] = { 0, };
     char *decimalPoint = ".";
     uint8_t dpLocation;
 
-    if (x > 0)                  // Rounding for x.xxx display format
-        x += 0.0005f;
+    if (x > 0)                  // Rounding for x.xxxxx display format
+        x += 0.000005f;
     else
-        x -= 0.0005f;
+        x -= 0.000005f;
 
-    value = (int32_t) (x * 1000.0f);    // Convert float * 1000 to an integer
+    value = (int32_t) (x * 100000.0f);    // Convert float * 100000 to an integer
 
     itoa(abs(value), intString1, 10);   // Create string from abs of integer value
 
@@ -263,24 +263,39 @@ char *ftoa(float x, char *floatString)
         intString2[0] = ' ';    // Positive number, add a pad space
     else
         intString2[0] = '-';    // Negative number, add a negative sign
-
+    
     if (strlen(intString1) == 1) {
         intString2[1] = '0';
         intString2[2] = '0';
         intString2[3] = '0';
+        intString2[4] = '0';
+        intString2[5] = '0';
         strcat(intString2, intString1);
-    } else if (strlen(intString1) == 2) {
+    }
+    else if (strlen(intString1) == 2) {
+        intString2[1] = '0';
+        intString2[2] = '0';
+        intString2[3] = '0';
+        intString2[4] = '0';
+        strcat(intString2, intString1);
+    }
+    else if (strlen(intString1) == 3) {
+        intString2[1] = '0';
+        intString2[2] = '0';
+        intString2[3] = '0';
+        strcat(intString2, intString1);
+    } else if (strlen(intString1) == 4) {
         intString2[1] = '0';
         intString2[2] = '0';
         strcat(intString2, intString1);
-    } else if (strlen(intString1) == 3) {
+    } else if (strlen(intString1) == 5) {
         intString2[1] = '0';
         strcat(intString2, intString1);
     } else {
         strcat(intString2, intString1);
     }
 
-    dpLocation = strlen(intString2) - 3;
+    dpLocation = strlen(intString2) - 5;
 
     strncpy(floatString, intString2, dpLocation);
     floatString[dpLocation] = '\0';

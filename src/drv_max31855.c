@@ -2,6 +2,7 @@
 #include "drv_max31855.h"
 #include "drv_max31855.h"
 
+
 static uint32_t raw_read(int sensor)
 {
     int i;
@@ -40,10 +41,9 @@ float read_celsius(int sensor)
 
 
     if (raw_data & 0x7) {
-        // uh oh, a serious problem!
+        // fail
         return 0;
     }
-
     raw_data >>= 18;
 
     temp = raw_data & 0x3FFF;

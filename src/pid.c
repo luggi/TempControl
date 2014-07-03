@@ -1,11 +1,8 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * Pid controller library by Lukas Schöpf
+ * 
+ * Licensed under GPL v3
  *
  * ========================================
 */
@@ -27,8 +24,8 @@ void pid_init(pid_t * pidData, float P, float I, float D, float Tf, float windup
     pidData->write = outputPtr;
     pidData->Tf = Tf;
 }
-#define F_CUT_ACCZ 0.2f // 0.2Hz -> ~5 seconds weighted averaging
-static const float fc_dterm = 0.5f / (M_PI * F_CUT_ACCZ);
+#define F_CUT 0.2f // 0.2Hz -> ~5 seconds weighted averaging
+static const float fc_dterm = 0.5f / (M_PI * F_CUT);
 
 void pid_calc(pid_t * pidData, float setpoint, float processValue, float deltaT)
 {
