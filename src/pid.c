@@ -38,9 +38,9 @@ void pid_calc(pid_t * pidData, float setpoint, float processValue, float deltaT)
     pidData->Iterm = constrain(0, pidData->windup, pidData->Iterm);
     
     dTerm = ((processValue - pidData->old_processValue) * pidData->D / deltaT);
-    dTerm_filtered = dTerm_filtered + (deltaT / (fc_dterm + deltaT)) * (dTerm - dTerm_filtered);
+    pidData->dTermfiltered = dTerm_filtered + (deltaT / (fc_dterm + deltaT)) * (dTerm - dTerm_filtered);
 
-    output = (error * pidData->P) + (pidData->Iterm * deltaT) - dTerm_filtered;
+    output = (error * pidData->P) + (pidData->Iterm * deltaT) - pidData->dTermfiltered;
 
     pidData->old_processValue = processValue;
     

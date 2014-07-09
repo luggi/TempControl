@@ -66,7 +66,7 @@ void resetConf(void)
     cfg.input.scale[VOLTAGE_VMON] = 10.56f;
     cfg.input.scale[VOLTAGE_CMON] = 10.56f;
     
-    pid_init(&cfg.pid1, 0.4f, 0.0002f, 15.0f, 0.0f, 10.0f, outputCurrentfromPID1);
+    pid_init(&cfg.pid1, 0.40f, 0.0002f, 15.0f, 0.0f, 10.0f, outputCurrentfromPID1);
     pid_init(&cfg.pid2, 0.12f, 0.00002f, 15.0f, 0.0f, 10.0f, outputCurrentfromPID2);
     
     cfg.manualMode = 1;

@@ -1,3 +1,9 @@
+/*
+*
+*   This file originates form the Open Source project Baseflight 
+*   and is under GPLv3
+*   https://github.com/multiwii/baseflight/blob/master/src/cli.c
+*/
 #include "board.h"
 #include "cli.h"
 

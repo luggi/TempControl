@@ -23,6 +23,7 @@ typedef struct pid_t {
     float old_processValue;
     float old_output;
     float windup;
+    float dTermfiltered;
     outputFunctionPtr write;
 } pid_t;
 
