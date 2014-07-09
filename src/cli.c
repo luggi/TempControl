@@ -84,7 +84,7 @@ const clivalue_t valueTable[] = {
     {"scalevoltstoamps", VAR_FLOAT, &cfg.output.scaleVoltageToAmpere, 0, 100},
     {"inputvoltagescalemosfet", VAR_FLOAT, &cfg.input.scale[VOLTAGE_MOSFET], 0, 110},
     {"inputcurrentscalemosfet", VAR_FLOAT, &cfg.input.scale[CURRENT_MOSFET], 0, 110},
-    {"inputvoltagescaleCMON", VAR_FLOAT, &cfg.input.scale[VOLTAGE_CMON], 0, 110},
+    {"inputvoltagescaleCMON", VAR_FLOAT, &cfg.input.scale[CURRENT_CMON], 0, 110},
     {"inputvoltagescaleVMON", VAR_FLOAT, &cfg.input.scale[VOLTAGE_VMON], 0, 110},
     {"inputvoltagescaleVin", VAR_FLOAT, &cfg.input.scale[VOLTAGE_INPUT], 0, 110},
     {"dacvoltoffset", VAR_FLOAT, &cfg.output.voltageOffset, 0, 1},
@@ -507,7 +507,7 @@ static void cliStatus(char *cmdline)
     printf("MOSFET_A: %s \r\n", ftoa(input_voltage[1], buf));
     printf("VIN: %s \r\n", ftoa(input_voltage[VOLTAGE_INPUT], buf));
     printf("VMON: %s \r\n", ftoa(input_voltage[VOLTAGE_VMON], buf));
-    printf("CMON: %s \r\n", ftoa(input_voltage[VOLTAGE_CMON], buf));
+    printf("CMON: %s \r\n", ftoa(input_voltage[CURRENT_CMON], buf));
     printf("eeprom: %d\n\r", cfg.eeprom);
 }
 

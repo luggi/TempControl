@@ -62,7 +62,7 @@ enum inputs {
     CURRENT_MOSFET,
     VOLTAGE_INPUT,
     VOLTAGE_VMON,
-    VOLTAGE_CMON,
+    CURRENT_CMON,
     ADC_CHANNEL_COUNT
 };
 

@@ -93,6 +93,7 @@ int main(void)
             }
             else if (cfg.debug == 2)
             {
+                printf("uT:%i;",millis()/1000);
                 printf("T1:%s;",ftoa(control.temperature[SENSOR1], buffer));
                 printf("T2:%s;",ftoa(control.temperature[SENSOR2], buffer));
                 printf("V:%s;", ftoa(input_voltage[VOLTAGE_MOSFET], buffer));
@@ -104,11 +105,12 @@ int main(void)
                 printf("uT:%i;",millis()/1000);
                 printf("T1s:%s;",ftoa(control.temperature_smooth[SENSOR1], buffer));
                 printf("T2s:%s;",ftoa(control.temperature_smooth[SENSOR2], buffer));
-                printf("Vmosfet:%s;", ftoa(input_voltage[VOLTAGE_MOSFET], buffer));
-                printf("Amosfet:%s;",ftoa(input_voltage[CURRENT_MOSFET], buffer));
-                printf("Vsens:%s\r\n",ftoa(input_voltage[CURRENT_MOSFET], buffer));
+                printf("Vint:%s;", ftoa(input_voltage[VOLTAGE_MOSFET], buffer));
+                printf("Aint:%s;",ftoa(input_voltage[CURRENT_MOSFET], buffer));
+                printf("Vext:%s\r\n",ftoa(input_voltage[VOLTAGE_VMON], buffer));
+                printf("Aext:%s\r\n",ftoa(input_voltage[CURRENT_CMON], buffer));
             }
-                
+
         }
         if (interval2 < time_now) { // read ADC every 10ms
             interval2 = time_now + 10;
